@@ -1,0 +1,746 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Planechase (Commander) — 19-Card Deck</title>
+  <style>
+    :root {
+      --bg: #0b0c0f;
+      --panel: #141622;
+      --panel2: #10121a;
+      --text: #f2f3f5;
+      --muted: #b7bcc7;
+      --rule: rgba(255,255,255,0.12);
+      --accent: #7dd3fc;
+      --danger: #fb7185;
+      --ok: #86efac;
+      --warn: #fbbf24;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background: linear-gradient(180deg, var(--bg), #07080a 70%);
+      color: var(--text);
+    }
+
+    .wrap {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 16px 14px 32px;
+    }
+
+    header {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      font-size: 20px;
+      margin: 0;
+      letter-spacing: 0.2px;
+      line-height: 1.2;
+    }
+
+    .sub {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.35;
+      margin: 0;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    @media (min-width: 820px) {
+      .row {
+        grid-template-columns: 1fr 360px;
+        align-items: start;
+      }
+    }
+
+    .card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--rule);
+      border-radius: 16px;
+      padding: 14px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+      backdrop-filter: blur(6px);
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .btnrow {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    button {
+      appearance: none;
+      border: 1px solid var(--rule);
+      background: rgba(255,255,255,0.07);
+      color: var(--text);
+      border-radius: 14px;
+      padding: 14px 12px;
+      font-size: 16px;
+      font-weight: 650;
+      letter-spacing: 0.2px;
+      cursor: pointer;
+      min-height: 52px;
+      touch-action: manipulation;
+    }
+    button:active { transform: translateY(1px); }
+    button:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .btn-primary { border-color: rgba(125, 211, 252, 0.35); }
+    .btn-chaos { border-color: rgba(251, 191, 36, 0.35); }
+    .btn-reset { border-color: rgba(251, 113, 133, 0.35); }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .pill {
+      padding: 6px 10px;
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+    }
+
+    .sectionTitle {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .sectionTitle h2 {
+      font-size: 16px;
+      margin: 0;
+    }
+    .tiny {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .planeGrid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .plane {
+      border: 1px solid var(--rule);
+      border-radius: 14px;
+      padding: 12px;
+      background: rgba(0,0,0,0.15);
+    }
+
+    .planeHeader {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .planeName {
+      font-size: 15px;
+      font-weight: 750;
+      line-height: 1.2;
+      margin: 0;
+    }
+    .badge {
+      font-size: 12px;
+      font-weight: 750;
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: 1px solid var(--rule);
+      background: rgba(255,255,255,0.05);
+      white-space: nowrap;
+    }
+    .badge-plane { color: var(--accent); border-color: rgba(125, 211, 252, 0.35); }
+    .badge-phen { color: var(--warn); border-color: rgba(251, 191, 36, 0.35); }
+
+    .label {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 10px;
+      margin-bottom: 4px;
+      letter-spacing: 0.2px;
+      text-transform: uppercase;
+    }
+
+    .textblock {
+      margin: 0;
+      line-height: 1.35;
+      font-size: 14px;
+    }
+
+    .hr {
+      height: 1px;
+      background: var(--rule);
+      margin: 12px 0;
+    }
+
+    details {
+      border: 1px solid var(--rule);
+      background: rgba(255,255,255,0.05);
+      border-radius: 14px;
+      padding: 10px 12px;
+    }
+    summary {
+      cursor: pointer;
+      font-weight: 700;
+      list-style: none;
+      outline: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+    .reminder {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.35;
+      margin-top: 8px;
+    }
+
+    .toast {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--rule);
+      background: rgba(0,0,0,0.22);
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.35;
+      display: none;
+    }
+
+    .toast.show { display: block; }
+    .toast.ok { border-color: rgba(134, 239, 172, 0.35); }
+    .toast.warn { border-color: rgba(251, 191, 36, 0.35); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Planechase (Commander) — 19-Card Deck</h1>
+      <p class="sub">
+        You roll dice off-app. Use <b>Planeswalk</b> or <b>Trigger CHAOS</b> here. Phenomena auto-planeswalk.
+        Supports <b>Spatial Merging</b> (two planes active).
+      </p>
+    </header>
+
+    <div class="row">
+      <div class="card" id="mainCard">
+        <div class="sectionTitle">
+          <h2>Active Plane(s)</h2>
+          <div class="tiny" id="activeHint">Press “Planeswalk” to start.</div>
+        </div>
+
+        <div class="planeGrid" id="activePlanes"></div>
+
+        <div class="toast" id="toast"></div>
+
+        <div class="hr"></div>
+
+        <div class="sectionTitle">
+          <h2>CHAOS Effects</h2>
+          <div class="tiny" id="chaosHint">Use “Trigger CHAOS” after you roll it.</div>
+        </div>
+        <div class="plane" id="chaosBox" aria-live="polite">
+          <p class="textblock muted" id="chaosText" style="color: var(--muted); margin:0;">
+            No active plane yet.
+          </p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="controls">
+          <div class="btnrow">
+            <button class="btn-primary" id="btnPlaneswalk">Planeswalk</button>
+            <button class="btn-chaos" id="btnChaos" disabled>Trigger CHAOS</button>
+          </div>
+
+          <div class="btnrow">
+            <button id="btnShuffle">Shuffle Deck</button>
+            <button class="btn-reset" id="btnReset">Reset Game</button>
+          </div>
+
+          <div class="meta">
+            <span class="pill" id="deckCount">Deck: 19</span>
+            <span class="pill" id="discardCount">Bottom pile: 0</span>
+            <span class="pill" id="mergeStatus">Merging: off</span>
+          </div>
+
+          <details open>
+            <summary>Rule reminders</summary>
+            <div class="reminder">
+              <ul style="margin: 8px 0 0; padding-left: 18px;">
+                <li><b>Roll dice manually</b>. Use buttons for outcomes.</li>
+                <li>Roll costs (suggested): first free, then +1 mana each extra roll (max 3 rolls/turn).</li>
+                <li><b>Phenomena:</b> resolve once, then immediately planeswalk.</li>
+                <li><b>Table fix:</b> if two players agree, planeswalk once per round.</li>
+                <li><b>Spatial Merging:</b> two planes active; on planeswalk, remove the older plane, keep the newer.</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ----- Data -----
+    // 14 planes + 5 phenomena = 19 cards total
+    const DECK_TEMPLATE = [
+      // Planes
+      {
+        id: "naya",
+        kind: "plane",
+        name: "Naya",
+        label: "Deathless Pilot",
+        staticText: "Creatures get +1/+1.",
+        chaosText: "Create a 3/3 green Beast creature token."
+      },
+      {
+        id: "bant",
+        kind: "plane",
+        name: "Bant",
+        label: "Bestow Greatness",
+        staticText: "Creatures have exalted. (Whenever a creature attacks alone, it gets +1/+1 until end of turn.)",
+        chaosText: "Draw a card."
+      },
+      {
+        id: "ravnica",
+        kind: "plane",
+        name: "Ravnica",
+        label: "Bounce Off",
+        staticText: "Whenever you cast a spell, draw a card, then discard a card.",
+        chaosText: "Draw a card."
+      },
+      {
+        id: "zendikar",
+        kind: "plane",
+        name: "Zendikar",
+        label: "Lightshield Parry",
+        staticText: "Whenever a land enters the battlefield under your control, creatures you control get +2/+2 until end of turn.",
+        chaosText: "Create a 2/2 green Elemental creature token."
+      },
+      {
+        id: "dominaria",
+        kind: "plane",
+        name: "Dominaria",
+        label: "Pedal to the Metal",
+        staticText: "Historic spells (artifacts, legendaries, and Sagas) cost 1 less to cast.",
+        chaosText: "Draw two cards."
+      },
+      {
+        id: "kamigawa",
+        kind: "plane",
+        name: "Kamigawa",
+        label: "Chicken Gravestalker",
+        staticText: "Whenever you cast a noncreature spell, draw a card.",
+        chaosText: "Return a card from your graveyard to your hand."
+      },
+      {
+        id: "mirrodin",
+        kind: "plane",
+        name: "Mirrodin",
+        label: "Aether Jacket",
+        staticText: "Artifact spells cost 1 less to cast.",
+        chaosText: "Create a Treasure token."
+      },
+      {
+        id: "theros",
+        kind: "plane",
+        name: "Theros",
+        label: "Ranger’s Refueler",
+        staticText: "Creatures you control get +1/+1.",
+        chaosText: "Scry 2, then draw a card."
+      },
+      {
+        id: "ixalan",
+        kind: "plane",
+        name: "Ixalan",
+        label: "Earth Rumbler",
+        staticText: "Creatures with power 4 or greater can’t be blocked by creatures with power 2 or less.",
+        chaosText: "Create a Treasure token."
+      },
+      {
+        id: "kaladesh",
+        kind: "plane",
+        name: "Kaladesh",
+        label: "Pit Automation",
+        staticText: "Whenever you cast an artifact spell, draw a card.",
+        chaosText: "Create two Treasure tokens."
+      },
+      {
+        id: "alara",
+        kind: "plane",
+        name: "Alara",
+        label: "Hull Drifter",
+        staticText: "Multicolored spells cost 1 less to cast.",
+        chaosText: "Draw a card."
+      },
+      {
+        id: "innistrad",
+        kind: "plane",
+        name: "Innistrad",
+        label: "Burnout Bastronaut",
+        staticText: "Whenever a creature dies, each player loses 1 life.",
+        chaosText: "Create a 1/1 white Spirit creature token with flying."
+      },
+      {
+        id: "amonkhet",
+        kind: "plane",
+        name: "Amonkhet",
+        label: "Wreckage Wickerfolk",
+        staticText: "Creatures have haste.",
+        chaosText: "Each player sacrifices a creature."
+      },
+      {
+        id: "fiora",
+        kind: "plane",
+        name: "Fiora",
+        label: "Swiftwater Cliffs",
+        staticText: "Whenever a player casts a creature spell, that player becomes the monarch.",
+        chaosText: "You become the monarch and draw a card."
+      },
+
+      // Phenomena
+      {
+        id: "interplanar_tunnel",
+        kind: "phenomenon",
+        name: "Interplanar Tunnel",
+        label: "Glitch Ghost Surveyor",
+        effectText: "Exile all creatures, then return them to the battlefield under their owners’ control. Then planeswalk."
+      },
+      {
+        id: "reality_shaping",
+        kind: "phenomenon",
+        name: "Reality Shaping",
+        label: "Ride’s End",
+        effectText: "Each player reveals cards from the top of their library until they reveal a permanent card and puts it onto the battlefield. Then planeswalk."
+      },
+      {
+        id: "chaotic_aether",
+        kind: "phenomenon",
+        name: "Chaotic Aether",
+        label: "Magmakin Artillerist",
+        effectText: "Each player discards a card, then draws a card. Then planeswalk."
+      },
+      {
+        id: "spatial_merging",
+        kind: "phenomenon",
+        name: "Spatial Merging",
+        label: "Walking Sarcophagus",
+        effectText: "Reveal the next plane. Both planes’ effects are active. When someone planeswalks, put the older plane on the bottom of the planar deck."
+      },
+      {
+        id: "planar_bridge_collapse",
+        kind: "phenomenon",
+        name: "Planar Bridge Collapse",
+        label: "Gastal Raider",
+        effectText: "Each player sacrifices a nonland permanent. Then planeswalk."
+      }
+    ];
+
+    // ----- State -----
+    let deck = [];
+    let bottomPileCount = 0;
+
+    // activePlanes: [] or [plane] or [olderPlane, newerPlane]
+    let activePlanes = [];
+
+    // if a Spatial Merging phenomenon is currently "armed" (next reveal adds a plane and keeps current)
+    let spatialMergingArmed = false;
+
+    // ----- Helpers -----
+    function cloneDeckTemplate() {
+      return DECK_TEMPLATE.map(c => ({ ...c }));
+    }
+
+    function shuffle(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function drawTop() {
+      if (deck.length === 0) return null;
+      return deck.shift();
+    }
+
+    function putOnBottom(card) {
+      deck.push(card);
+      bottomPileCount += 1;
+    }
+
+    function setToast(message, type = "ok") {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.className = "toast show " + (type === "warn" ? "warn" : "ok");
+      window.clearTimeout(setToast._t);
+      setToast._t = window.setTimeout(() => {
+        toast.className = "toast";
+        toast.textContent = "";
+      }, 2600);
+    }
+
+    // ----- Rendering -----
+    function render() {
+      const activeHint = document.getElementById("activeHint");
+      const chaosBtn = document.getElementById("btnChaos");
+      const activeWrap = document.getElementById("activePlanes");
+      const chaosText = document.getElementById("chaosText");
+
+      // Meta pills
+      document.getElementById("deckCount").textContent = `Deck: ${deck.length}`;
+      document.getElementById("discardCount").textContent = `Bottom pile: ${bottomPileCount}`;
+      document.getElementById("mergeStatus").textContent = `Merging: ${activePlanes.length === 2 ? "ON" : "off"}`;
+
+      // Active hint / chaos availability
+      if (activePlanes.length === 0) {
+        activeHint.textContent = "Press “Planeswalk” to start.";
+        chaosBtn.disabled = true;
+      } else {
+        activeHint.textContent = activePlanes.length === 2 ? "Two planes are active (Spatial Merging)." : "One plane is active.";
+        chaosBtn.disabled = false;
+      }
+
+      // Active planes UI
+      activeWrap.innerHTML = "";
+      if (activePlanes.length === 0) {
+        const div = document.createElement("div");
+        div.className = "plane";
+        div.innerHTML = `<p class="textblock" style="margin:0;color:var(--muted);">No plane active yet. Hit <b>Planeswalk</b>.</p>`;
+        activeWrap.appendChild(div);
+      } else {
+        activePlanes.forEach((p, idx) => {
+          const div = document.createElement("div");
+          div.className = "plane";
+
+          const badgeClass = p.kind === "plane" ? "badge-plane" : "badge-phen";
+          const badgeText = p.kind === "plane" ? "PLANE" : "PHENOMENON";
+          const ageTag = activePlanes.length === 2 ? (idx === 0 ? " (older)" : " (newer)") : "";
+
+          div.innerHTML = `
+            <div class="planeHeader">
+              <p class="planeName">${escapeHtml(p.name)} <span class="tiny" style="color:var(--muted); font-weight:600;">— ${escapeHtml(p.label)}${ageTag}</span></p>
+              <span class="badge ${badgeClass}">${badgeText}</span>
+            </div>
+            ${
+              p.kind === "plane"
+                ? `
+                  <div class="label">Static</div>
+                  <p class="textblock">${escapeHtml(p.staticText)}</p>
+                  <div class="label">CHAOS</div>
+                  <p class="textblock">${escapeHtml(p.chaosText)}</p>
+                `
+                : `
+                  <div class="label">Effect</div>
+                  <p class="textblock">${escapeHtml(p.effectText)}</p>
+                `
+            }
+          `;
+          activeWrap.appendChild(div);
+        });
+      }
+
+      // CHAOS text box (shows current chaos effects for active planes only)
+      if (activePlanes.length === 0) {
+        chaosText.textContent = "No active plane yet.";
+        chaosText.style.color = "var(--muted)";
+      } else {
+        const lines = [];
+        activePlanes.forEach(p => {
+          if (p.kind === "plane") {
+            lines.push(`${p.name}: ${p.chaosText}`);
+          } else {
+            lines.push(`${p.name}: (Phenomenon — no CHAOS ability)`);
+          }
+        });
+        chaosText.textContent = lines.join("  |  ");
+        chaosText.style.color = "var(--text)";
+      }
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    // ----- Game Logic -----
+
+    function initGame({ reshuffle = true } = {}) {
+      deck = cloneDeckTemplate();
+      if (reshuffle) shuffle(deck);
+      bottomPileCount = 0;
+      activePlanes = [];
+      spatialMergingArmed = false;
+      setToast("Game ready. Planeswalk to begin.", "ok");
+      render();
+    }
+
+    function shuffleDeck() {
+      shuffle(deck);
+      setToast("Deck shuffled.", "ok");
+      render();
+    }
+
+    function triggerChaos() {
+      if (activePlanes.length === 0) return;
+      // We already show chaos text; the button just makes it obvious at the moment.
+      setToast("CHAOS triggered — apply the effect(s) shown.", "warn");
+      // (No state change necessary.)
+      render();
+    }
+
+    // The only thing that requires care:
+    // - Spatial Merging phenomenon: reveal next plane; keep current + next simultaneously.
+    // - Phenomena generally auto-planeswalk (immediately reveal next) and do not remain active.
+    function planeswalk() {
+      if (deck.length === 0) {
+        setToast("Deck is empty. Shuffle or reset.", "warn");
+        render();
+        return;
+      }
+
+      // If we currently have two planes active (merged), and we planeswalk:
+      // remove the older plane (put it on bottom), keep the newer.
+      if (activePlanes.length === 2) {
+        const older = activePlanes[0];
+        const newer = activePlanes[1];
+        putOnBottom(older);
+        activePlanes = [newer]; // keep newer active
+        // After resolving the removal, proceed to reveal the next card normally.
+      } else if (activePlanes.length === 1) {
+        // Normal: put current plane on bottom before moving on
+        putOnBottom(activePlanes[0]);
+        activePlanes = [];
+      }
+
+      // Now reveal next card(s), handling phenomena
+      revealUntilPlaneSettles();
+      render();
+    }
+
+    function revealUntilPlaneSettles() {
+      // Draw next card. If it's phenomenon:
+      // - Spatial Merging: arm merging and immediately reveal next plane (keep current if exists)
+      // - Others: show toast effect and immediately planeswalk again (i.e., reveal next card),
+      //   but do not place phenomenon into activePlanes.
+      // We stop once we have an active plane set (or two if merging), with no pending auto-walk.
+      let safety = 50; // prevent infinite loop in case of logic errors
+      while (safety-- > 0) {
+        const card = drawTop();
+        if (!card) {
+          setToast("Deck ran out. Shuffle or reset.", "warn");
+          return;
+        }
+
+        if (card.kind === "plane") {
+          if (spatialMergingArmed && activePlanes.length === 1) {
+            // Add as newer plane, keep older in place
+            activePlanes = [activePlanes[0], card];
+            spatialMergingArmed = false;
+            setToast(`Spatial Merging: ${activePlanes[0].name} + ${card.name} are both active.`, "warn");
+            return;
+          } else {
+            // Normal: this plane becomes active
+            activePlanes = [card];
+            spatialMergingArmed = false;
+            setToast(`Planeswalked to ${card.name}.`, "ok");
+            return;
+          }
+        }
+
+        // Phenomenon
+        if (card.id === "spatial_merging") {
+          // Spatial Merging needs a plane to already exist to "merge" meaningfully.
+          // If no plane is active, we treat it as: reveal next plane and that becomes active (then arm merge?).
+          // Table-friendly behavior:
+          // - If one plane is active (after we put previous on bottom), Spatial Merging will merge with next plane.
+          // - If no plane is active (first reveal of the game), we just arm merge and then reveal the next plane; that plane becomes active.
+          spatialMergingArmed = true;
+
+          if (activePlanes.length === 0) {
+            // First plane: just reveal next plane and set it active (no merge yet).
+            // (You can still get a merge later if Spatial Merging happens when a plane is active.)
+            setToast("Spatial Merging revealed — reveal the next plane.", "warn");
+            // reveal next card; if it's plane, it becomes active (spatialMergingArmed remains true but will be cleared unless a second plane is added)
+            // However, if we allow it to remain armed with only one plane, next time a plane is revealed via planeswalk it would merge unexpectedly.
+            // So for first-plane case: we will not keep it armed after setting the first plane.
+            const next = drawTop();
+            if (!next) return;
+            if (next.kind === "plane") {
+              activePlanes = [next];
+              spatialMergingArmed = false;
+              setToast(`Planeswalked to ${next.name}. (Spatial Merging did not create a double-plane because there was no active plane.)`, "ok");
+              return;
+            } else {
+              // If another phenomenon appears, put it back into handling loop by unshifting it (or just handle it directly).
+              // We'll handle it directly by setting card to next via loop continuation.
+              deck.unshift(next);
+              spatialMergingArmed = false;
+              continue;
+            }
+          } else if (activePlanes.length === 1) {
+            setToast("Spatial Merging revealed — reveal the next plane (both will be active).", "warn");
+            // loop continues, next plane drawn will merge via spatialMergingArmed
+            continue;
+          } else {
+            // already merged; shouldn't happen since Spatial Merging isn't kept active. Just treat as normal auto-walk.
+            spatialMergingArmed = false;
+            continue;
+          }
+        }
+
+        // Other phenomena: show toast and immediately "planeswalk again" (i.e., keep looping)
+        setToast(`${card.name}: ${card.effectText} (Auto-planeswalk)`, "warn");
+        // Note: we don't put phenomenon on bottom pile count; it effectively goes to "used" state.
+        // If you'd prefer it to cycle, you could put it on bottom; we keep it out to reduce repeated chaos.
+        // For simplicity (and matching our original paper approach), we will put it on the bottom.
+        putOnBottom(card);
+        // continue loop to reveal next card
+      }
+
+      setToast("Something went wrong resolving planes. Reset and try again.", "warn");
+    }
+
+    // ----- Wire up UI -----
+    document.getElementById("btnPlaneswalk").addEventListener("click", planeswalk);
+    document.getElementById("btnChaos").addEventListener("click", triggerChaos);
+    document.getElementById("btnShuffle").addEventListener("click", shuffleDeck);
+    document.getElementById("btnReset").addEventListener("click", () => initGame({ reshuffle: true }));
+
+    // Start
+    initGame({ reshuffle: true });
+  </script>
+</body>
+</html>
