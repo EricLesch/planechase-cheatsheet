@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>3-Player Commander Planechase – Aether Drift Cheat Sheet</title>
+  <style>
+    :root { --fg:#111; --muted:#555; --bg:#fff; --rule:#e6e6e6; }
+    body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color:var(--fg); background:var(--bg); }
+    .wrap { max-width: 900px; margin: 0 auto; padding: 24px 18px 40px; }
+    h1 { font-size: 22px; margin: 0 0 10px; }
+    h2 { font-size: 16px; margin: 22px 0 10px; }
+    p, li { line-height: 1.35; }
+    .box { border:1px solid var(--rule); border-radius: 12px; padding: 14px 14px; }
+    .grid { display:grid; grid-template-columns: 1fr; gap: 10px; }
+    @media (min-width: 780px) { .grid { grid-template-columns: 1fr 1fr; } }
+    .item { border:1px solid var(--rule); border-radius: 12px; padding: 10px 12px; }
+    .name { font-weight: 700; }
+    .tag { color: var(--muted); font-weight: 600; }
+    .line { margin-top: 4px; color: var(--fg); }
+    .muted { color: var(--muted); }
+    hr { border:0; border-top:1px solid var(--rule); margin: 16px 0; }
+    .small { font-size: 13px; }
+    code { background:#f5f5f5; padding:2px 6px; border-radius:6px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>3-Player Commander Planechase – <span class="muted">Aether Drift Cheat Sheet</span></h1>
+
+    <div class="box">
+      <h2 style="margin-top:0">🎲 Planar Rules</h2>
+      <ul>
+        <li><b>One shared planar deck</b> (19 cards)</li>
+        <li><b>First roll each turn:</b> free</li>
+        <li><b>Second roll:</b> costs 1 mana • <b>Third roll:</b> costs 2 mana • <b>Max:</b> 3 rolls/turn</li>
+        <li><b>d6 replacement:</b> <code>1 = Planeswalk</code> • <code>2 = CHAOS</code> • <code>3–6 = Nothing</code></li>
+        <li><b>Table fix:</b> If <b>two players agree</b>, planeswalk once per round</li>
+        <li><b>Phenomena:</b> resolve once, then immediately planeswalk</li>
+      </ul>
+      <p class="small muted" style="margin:0">Use the Aether Drift card as a label; ignore its printed text.</p>
+    </div>
+
+    <h2>🌍 Planes (14)</h2>
+    <div class="grid">
+      <div class="item">
+        <div class="name">Deathless Pilot <span class="tag">— Naya</span></div>
+        <div class="line">Static: Creatures get +1/+1</div>
+        <div class="line"><b>CHAOS:</b> Create a 3/3 Beast</div>
+      </div>
+
+      <div class="item">
+        <div class="name">Bestow Greatness <span class="tag">— Bant</span></div>
+        <div class="line">Static: Creatures have exalted</div>
+        <div class="line"><b>CHAOS:</b> Draw a card</div>
+      </div>
+
+      <div class="item">
+        <div class="name">Bounce Off <span class="tag">— Ravnica</span></div>
+        <div class="line">Static: Whenever you cast a spell, draw then discard</div>
+        <div class="line"><b>CHAOS:</b> Draw a card</div>
+      </div>
+
+      <div class="item">
+        <div class="name">Lightshield Parry <span class="tag">— Zendikar</span></div>
+        <div class="line">Static: Landfall — your creatures get +2/+2 until EOT</div>
+        <div class="line"><b>CHAOS:</b> Create a 2/2 Elemental</div>
+      </div>
+
+      <div class="item">
+        <div class="name">Pedal to the Metal <span class="tag">— Dominaria</span></div>
+        <div class="line">Static: Historic spells cost 1 less</div>
+        <div class="line"><b>CHAOS:</b> Draw two cards</div>
+      </div>
+
+      <div class="item">
+        <div class="name">Chicken Gravestalker <span class="tag">— Kamigawa</span></div>
+        <div class="line">Static: Whenever you cast a noncreature spell, draw a card</div>
+        <div class="line"><b>CHAOS:</b> Return a card from your graveyard to your hand</div>
+      </div>
+
+      <div class="item">
+        <div class="name">Aether Jacket <span class="tag">— Mirrodin</span></div>
+        <div class="line">Static: Artifact spells cost 1 less</div>
+        <div class="line"><b>CHAOS:</b> Create a Treasure</div>
+      </div>
+
+      <div class="item">
+        <div class="name">Ranger’s Refueler <span class="tag">— Theros</span></div>
+        <div class="line">Static: Creatures you control get +1/+1</div>
+        <div class="line"><b>CHAOS:</b> Scry 2, then draw</div>
+      </div>
+
+      <div class="item">
+        <div class="name">Earth Rumbler <span class="tag">— Ixalan</span></div>
+        <div class="line">Static: Power 4+ creatures can’t be blocked by power 2 or less</div>
+        <div class="line"><b>CHAOS:</b> Create a Treasure</div>
+      </div>
+
+      <div class="item">
+        <div class="name">Pit Automation <span class="tag">— Kaladesh</span></div>
+        <div class="line">Static: Whenever you cast an artifact spell, draw a card</div>
+        <div class="line"><b>CHAOS:</b> Create two Treasures</div>
+      </div>
+
+      <div class="item">
+        <div class="name">Hull Drifter <span class="tag">— Alara</span></div>
+        <div class="line">Static: Multicolored spells cost 1 less</div>
+        <div class="line"><b>CHAOS:</b> Draw a card</div>
+      </div>
+
+      <div class="item">
+        <div class="name">Burnout Bastronaut <span class="tag">— Innistrad</span></div>
+        <div class="line">Static: Whenever a creature dies, each player loses 1 life</div>
+        <div class="line"><b>CHAOS:</b> Create a 1/1 flying Spirit</div>
+      </div>
+
+      <div class="item">
+        <div class="name">Wreckage Wickerfolk <span class="tag">— Amonkhet</span></div>
+        <div class="line">Static: Creatures have haste</div>
+        <div class="line"><b>CHAOS:</b> Each player sacrifices a creature</div>
+      </div>
+
+      <div class="item">
+        <div class="name">Swiftwater Cliffs <span class="tag">— Fiora</span></div>
+        <div class="line">Static: Whenever a player casts a creature spell, they become the monarch</div>
+        <div class="line"><b>CHAOS:</b> You become the monarch and draw a card</div>
+      </div>
+    </div>
+
+    <h2>🌪 Phenomena (5)</h2>
+    <div class="grid">
+      <div class="item">
+        <div class="name">Glitch Ghost Surveyor <span class="tag">— Interplanar Tunnel</span></div>
+        <div class="line">Effect: Exile all creatures, then return them</div>
+        <div class="line"><b>Then:</b> Planeswalk</div>
+      </div>
+
+      <div class="item">
+        <div class="name">Ride’s End <span class="tag">— Reality Shaping</span></div>
+        <div class="line">Effect: Each player reveals until a permanent, puts it into play</div>
+        <div class="line"><b>Then:</b> Planeswalk</div>
+      </div>
+
+      <div class="item">
+        <div class="name">Magmakin Artillerist <span class="tag">— Chaotic Aether</span></div>
+        <div class="line">Effect: Each player discards a card, then draws a card</div>
+        <div class="line"><b>Then:</b> Planeswalk</div>
+      </div>
+
+      <div class="item">
+        <div class="name">Walking Sarcophagus <span class="tag">— Spatial Merging</span></div>
+        <div class="line">Effect: Reveal next plane — both planes are active</div>
+        <div class="line"><b>Note:</b> When planeswalking, put the older plane on bottom</div>
+      </div>
+
+      <div class="item">
+        <div class="name">Gastal Raider <span class="tag">— Planar Bridge Collapse</span></div>
+        <div class="line">Effect: Each player sacrifices a nonland permanent</div>
+        <div class="line"><b>Then:</b> Planeswalk</div>
+      </div>
+    </div>
+
+    <hr />
+    <p class="small muted">Tip: Put this page on your phone and leave the active card face-up as the plane marker.</p>
+  </div>
+</body>
+</html>
